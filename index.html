@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- custom -->
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Zoomer ($ZOOMER) on Solana</title>
+<meta name="description" content="i am zoomer. Glasses, side-part, phone in hand, attention span of a candle. The wojak who grew up online and never logged off.">
+<meta property="og:title" content="Zoomer ($ZOOMER)">
+<meta property="og:description" content="i am zoomer. Glasses, side-part, phone in hand, attention span of a candle. The wojak who grew up online and never logged off.">
+<meta property="og:image" content="banner.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Fredoka:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--olive:#5E7F25;--olive2:#4B671B;--olive3:#2f4211;--yellow:#FFE600;--ink:#111;--white:#fff;--pink:#ff2d95;--cyan:#00e5ff;--pw:430px;--ph:860px}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-snap-type:y proximity}
+body{background:var(--olive3);color:var(--white);font-family:'Fredoka',system-ui,sans-serif;font-size:17px;line-height:1.5;overflow-x:hidden;min-height:100vh}
+h1,h2,h3,.cap,.marker{font-family:'Permanent Marker',cursive;font-weight:400}
+a{color:inherit}
+
+/* ---------- glitchy background layer (slowest) ---------- */
+.bg{position:fixed;inset:-10% 0;z-index:0;pointer-events:none;will-change:transform;
+  background:url(meme_02.jpg) center/320px repeat;filter:saturate(1.3) contrast(1.1)}
+.bg::before{content:"";position:absolute;inset:0;background:rgba(94,127,37,.82);mix-blend-mode:multiply}
+.bg::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(0,0,0,.25) 0 2px,transparent 2px 5px)}
+.bg2{position:fixed;inset:-10% 0;z-index:0;pointer-events:none;background:url(meme_02.jpg) center/320px repeat;opacity:.18;mix-blend-mode:screen;filter:hue-rotate(160deg);
+  animation:glitch 4s steps(1) infinite}
+@keyframes glitch{0%,86%,100%{transform:translate(0);clip-path:inset(0)}88%{transform:translate(-9px,3px);clip-path:inset(10% 0 60% 0)}90%{transform:translate(7px,-4px);clip-path:inset(55% 0 20% 0)}92%{transform:translate(-4px,0);clip-path:inset(30% 0 40% 0)}94%{transform:translate(0);clip-path:inset(0)}}
+.shake{animation:shake 6s steps(1) infinite}
+@keyframes shake{0%,93%,100%{transform:translate(0)}94%{transform:translate(-5px,2px)}95%{transform:translate(4px,-3px)}96%{transform:translate(-2px,3px)}97%{transform:translate(0)}}
+.outside{position:fixed;z-index:1;pointer-events:none;color:var(--yellow);font-family:'Permanent Marker',cursive;font-size:clamp(40px,7vw,110px);line-height:.9;opacity:.9;text-shadow:5px 5px 0 var(--ink)}
+.outside.l{left:4vw;top:18vh;transform:rotate(-8deg)}
+.outside.r{right:4vw;bottom:14vh;transform:rotate(6deg);text-align:right}
+.outside small{display:block;font-family:'Fredoka',sans-serif;font-size:16px;color:#fff;text-shadow:2px 2px 0 var(--ink);margin-top:10px}
+
+/* ---------- the phone ---------- */
+.phone{position:fixed;left:50%;top:50%;width:var(--pw);height:var(--ph);margin:calc(var(--ph) / -2) 0 0 calc(var(--pw) / -2);z-index:5;
+  background:#000;border-radius:48px;overflow-y:auto;overflow-x:hidden;scroll-snap-type:y mandatory;overscroll-behavior:contain;
+  box-shadow:0 0 0 12px #141414,0 0 0 15px #3a3a3a,0 50px 100px rgba(0,0,0,.7);scrollbar-width:none;will-change:transform}
+.phone::-webkit-scrollbar{display:none}
+.notch{position:absolute;top:14px;left:50%;transform:translateX(-50%);width:120px;height:30px;background:#111;border-radius:20px;z-index:40;pointer-events:none}
+.phone-wrap{position:fixed;inset:0;z-index:5;pointer-events:none}
+.phone-wrap .notch{top:calc(50% - var(--ph)/2 + 14px)}
+
+.post{position:relative;height:100%;scroll-snap-align:start;scroll-snap-stop:always;overflow:hidden;background:var(--olive2);display:flex;flex-direction:column;justify-content:flex-end;isolation:isolate}
+.post .media{position:absolute;inset:-12% 0;z-index:0;will-change:transform}
+.post .media img,.post .media video{width:100%;height:100%;object-fit:cover;display:block}
+.post .media.blur img{filter:blur(14px) saturate(1.4);transform:scale(1.15);opacity:.6}
+.post .shade{position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(0,0,0,.35) 0,transparent 25%,transparent 45%,rgba(0,0,0,.85) 100%)}
+.post .body{position:relative;z-index:2;padding:28px 86px 36px 22px;will-change:transform}
+.post .body.wide{padding-right:22px}
+.post .top{position:absolute;top:0;left:0;right:0;z-index:3;display:flex;align-items:center;justify-content:space-between;padding:54px 20px 0;font-weight:700;font-size:14px;letter-spacing:.08em;text-transform:uppercase}
+.post .top .live{background:var(--pink);color:#fff;padding:2px 8px;border-radius:6px;font-size:12px}
+.user{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.user img{width:38px;height:38px;border-radius:50%;border:2px solid var(--yellow);background:#fff}
+.user b{font-size:16px}
+.user small{display:block;opacity:.8;font-size:13px;font-weight:400}
+.cap{font-size:30px;line-height:1.05;color:var(--yellow);text-shadow:3px 3px 0 var(--ink);margin-bottom:10px}
+.cap.xl{font-size:56px;line-height:.95}
+.cap .w{color:#fff}
+.tags{font-size:14px;opacity:.9;margin-bottom:14px}
+.tags span{margin-right:8px;color:var(--cyan)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-family:'Permanent Marker',cursive;font-size:19px;background:var(--yellow);color:var(--ink);border:3px solid var(--ink);border-radius:12px;padding:9px 18px;text-decoration:none;cursor:pointer;
+  box-shadow:4px 4px 0 var(--ink);transition:transform .12s cubic-bezier(.2,.9,.3,1.3),box-shadow .12s}
+.btn:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--ink)}
+.btn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--ink)}
+.btn.alt{background:var(--cyan)}
+.btn.w{width:100%}
+.btns{display:flex;flex-direction:column;gap:10px}
+
+/* side rail */
+.rail{position:absolute;right:12px;bottom:40px;z-index:4;display:flex;flex-direction:column;gap:16px;align-items:center}
+.rail button{background:none;border:0;color:#fff;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;font:600 12px 'Fredoka',sans-serif;font-family:inherit}
+.rail .ic{width:46px;height:46px;border-radius:50%;background:rgba(0,0,0,.45);border:2px solid rgba(255,255,255,.5);display:flex;align-items:center;justify-content:center;font-size:22px;transition:transform .15s cubic-bezier(.2,.9,.3,1.6)}
+.rail button:hover .ic{transform:scale(1.12)}
+.rail button.on .ic{background:var(--pink);border-color:var(--pink);animation:popit .35s cubic-bezier(.2,.9,.3,1.6)}
+@keyframes popit{50%{transform:scale(1.4)}}
+.rail .disc-spin{width:42px;height:42px;border-radius:50%;border:4px solid #222;background:url(logo.png) center/cover;animation:spin 5s linear infinite;margin-top:6px}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* CA post */
+.ca{display:flex;align-items:center;gap:8px;background:#000;border:3px solid var(--yellow);border-radius:12px;padding:10px 10px 10px 12px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px;min-width:0}
+.ca code{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ca button{font:700 14px 'Fredoka',sans-serif;background:var(--yellow);color:var(--ink);border:0;border-radius:8px;padding:8px 12px;cursor:pointer}
+.pin{display:inline-block;background:var(--yellow);color:var(--ink);font-weight:700;font-size:12px;letter-spacing:.1em;text-transform:uppercase;padding:3px 8px;border-radius:6px;margin-bottom:10px}
+
+/* comments (lore) */
+.cmt{display:flex;gap:10px;margin-bottom:12px;align-items:flex-start}
+.cmt img{width:34px;height:34px;border-radius:50%;border:2px solid var(--yellow);flex:0 0 34px;background:#fff}
+.cmt div{background:rgba(0,0,0,.55);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);border-radius:14px;padding:10px 12px;font-size:14.5px;line-height:1.4}
+.cmt b{display:block;color:var(--yellow);font-size:13px;margin-bottom:2px}
+
+/* stats (tokenomics) */
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.stat{background:rgba(0,0,0,.55);border:2px solid var(--yellow);border-radius:14px;padding:14px 12px;text-align:center}
+.stat b{display:block;font-family:'Permanent Marker',cursive;color:var(--yellow);font-size:14px;letter-spacing:.06em;text-transform:uppercase;font-weight:400}
+.stat span{display:block;font-weight:700;font-size:17px;line-height:1.2;margin-top:4px}
+
+/* steps */
+.steps{display:flex;flex-direction:column;gap:9px}
+.step{display:grid;grid-template-columns:40px 1fr;gap:10px;align-items:start;background:rgba(0,0,0,.55);border-radius:14px;padding:10px 12px}
+.step i{font-style:normal;font-family:'Permanent Marker',cursive;font-size:26px;color:var(--yellow);line-height:1}
+.step h3{font-size:17px;margin-bottom:2px}
+.step p{font-size:13.5px;opacity:.9;line-height:1.35}
+
+/* stories + grid (gallery) */
+.stories{display:flex;gap:12px;overflow-x:auto;padding:4px 2px 10px;scrollbar-width:none;margin-bottom:12px}
+.stories::-webkit-scrollbar{display:none}
+.story{flex:0 0 auto;width:66px;text-align:center;font-size:11px;font-weight:600}
+.story span{display:block;width:66px;height:66px;border-radius:50%;padding:3px;background:conic-gradient(var(--yellow),var(--pink),var(--cyan),var(--yellow));margin-bottom:4px}
+.story img{width:100%;height:100%;border-radius:50%;object-fit:cover;border:3px solid #000;display:block}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:4px}
+.grid img{width:100%;aspect-ratio:1;object-fit:cover;display:block;border-radius:6px}
+
+/* socials/footer post */
+.pills{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.pill{border:2px solid var(--yellow);border-radius:999px;padding:6px 14px;text-decoration:none;font-weight:600;font-size:14px;background:rgba(0,0,0,.4)}
+.pill:hover{background:var(--yellow);color:var(--ink)}
+.disc{font-size:11.5px;opacity:.7;line-height:1.4}
+
+/* quick snappy reveal */
+.rv{opacity:0;transform:translateY(24px)}
+.rv.in{opacity:1;transform:none;transition:transform .32s cubic-bezier(.2,.9,.3,1.3),opacity .2s}
+
+/* ---------- mobile: the phone becomes the page ---------- */
+@media (max-width:900px),(max-height:620px){
+  .phone{position:static;width:auto;height:auto;margin:0;border-radius:0;overflow:visible;box-shadow:none;scroll-snap-type:none;transform:none!important}
+  .phone-wrap,.outside{display:none}
+  .post{height:auto;min-height:100vh;min-height:100svh}
+  .post .top{padding-top:16px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .rv{opacity:1;transform:none}
+  html{scroll-snap-type:none}.phone{scroll-snap-type:none}
+}
+</style>
+</head>
+<body>
+
+<div class="bg shake" id="bg" aria-hidden="true"></div>
+<div class="bg2" aria-hidden="true"></div>
+<div class="outside l" aria-hidden="true">i am<br>zoomer<small>scroll the phone &darr;</small></div>
+<div class="outside r" aria-hidden="true">$ZOOMER<small>no cap. on Solana.</small></div>
+
+<div class="phone-wrap" aria-hidden="true"><div class="notch"></div></div>
+
+<main class="phone" id="phone">
+
+  <!-- 1. hero post -->
+  <section class="post" id="top">
+    <div class="media" data-p="0.35"><img src="hero.png" alt="Zoomer wojak"></div>
+    <div class="shade"></div>
+    <div class="top"><span>For you</span><span class="live">live</span></div>
+    <div class="rail">
+      <button type="button" class="like"><span class="ic">&#9829;</span>no cap</button>
+      <button type="button"><span class="ic">&#128172;</span>fr fr</button>
+      <button type="button" class="share"><span class="ic">&#10150;</span>share</button>
+      <span class="disc-spin"></span>
+    </div>
+    <div class="body" data-p="-0.12">
+      <div class="user"><img src="logo.png" alt=""><div><b>@zoomer</b><small>$ZOOMER &middot; Solana</small></div></div>
+      <h1 class="cap xl">i am<br><span class="w">zoomer</span></h1>
+      <p class="tags"><span>#zoomer</span><span>#wojak</span><span>#solana</span></p>
+      <p style="font-size:15px;margin-bottom:14px">Glasses, side-part, phone in hand, attention span of a candle. The wojak who grew up online and never logged off.</p>
+      <div class="btns"><a class="btn" href="#" target="_blank" rel="noopener">Buy on pump.fun</a></div>
+    </div>
+  </section>
+
+  <!-- 2. pinned CA -->
+  <section class="post">
+    <div class="media blur" data-p="0.3"><img src="meme_01.jpg" alt=""></div>
+    <div class="shade"></div>
+    <div class="top"><span>Pinned</span><span>&#128204;</span></div>
+    <div class="body wide" data-p="-0.1">
+      <span class="pin">pinned by @zoomer</span>
+      <h2 class="cap">the only CA that matters</h2>
+      <p style="font-size:14px;margin-bottom:12px;opacity:.9">always check it against the pinned post on X. zoomer does not DM you first.</p>
+      <div class="ca"><code id="ca">Contract address revealed at launch</code><button id="copy" type="button">Copy</button></div>
+    </div>
+  </section>
+
+  <!-- 3. lore as comments -->
+  <section class="post">
+    <div class="media" data-p="0.35"><img src="meme_04.jpg" alt=""></div>
+    <div class="shade" style="background:linear-gradient(180deg,rgba(0,0,0,.5),rgba(0,0,0,.8))"></div>
+    <div class="top"><span>Comments</span><span>&#8734;</span></div>
+    <div class="body wide" data-p="-0.1">
+      <h2 class="cap">i am zoomer</h2>
+      <div class="cmt rv"><img src="logo.png" alt=""><div><b>@zoomer</b>Every generation gets a wojak. Boomer had his energy drink, doomer had his beanie, and in 2018 the anons drew the zoomer: round glasses, haircut, a little smile, and a phone he will not put down.</div></div>
+      <div class="cmt rv"><img src="logo.png" alt=""><div><b>@zoomer</b>Zoomer dances when nobody asked, flexes in the bathroom mirror, speaks fluent slang that was outdated by Tuesday and somehow still wins. He is chronically online, mildly unhinged and completely unbothered.</div></div>
+      <div class="cmt rv"><img src="logo.png" alt=""><div><b>@zoomer</b>No roadmap, no VC, no team bag. Just a classic internet character, a lobby full of zoomers, and memes that refresh faster than the chart.</div></div>
+    </div>
+  </section>
+
+  <!-- 4. tokenomics as profile stats -->
+  <section class="post">
+    <div class="media blur" data-p="0.3"><img src="meme_05.jpg" alt=""></div>
+    <div class="shade"></div>
+    <div class="top"><span>Profile</span><span>&#9881;</span></div>
+    <div class="body wide" data-p="-0.1">
+      <div class="user"><img src="logo.png" alt=""><div><b>@zoomer</b><small>Zoomer Lobby &middot; est. 2018 energy</small></div></div>
+      <h2 class="cap">tokenomics</h2>
+      <div class="stats">
+        <div class="stat rv"><b>Supply</b><span>1,000,000,000</span></div>
+        <div class="stat rv"><b>Launch</b><span>Fair launch on pump.fun</span></div>
+        <div class="stat rv"><b>Tax</b><span>0% buy / 0% sell</span></div>
+        <div class="stat rv"><b>Liquidity</b><span>Auto-migrated &amp; burned by pump.fun</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. how to buy -->
+  <section class="post" id="buy">
+    <div class="media blur" data-p="0.3"><img src="meme_03.jpg" alt=""></div>
+    <div class="shade"></div>
+    <div class="top"><span>Tutorial</span><span>4 parts</span></div>
+    <div class="body wide" data-p="-0.1">
+      <h2 class="cap">how to buy (speedrun)</h2>
+      <div class="steps">
+        <div class="step rv"><i>1</i><div><h3>Get a wallet</h3><p>Download Phantom or Solflare from the official app store or site.</p></div></div>
+        <div class="step rv"><i>2</i><div><h3>Load SOL</h3><p>Buy SOL on an exchange and send it to your wallet address.</p></div></div>
+        <div class="step rv"><i>3</i><div><h3>Go to pump.fun</h3><p>Open the official $ZOOMER link above and connect your wallet. Always check the CA.</p></div></div>
+        <div class="step rv"><i>4</i><div><h3>Swap for $ZOOMER</h3><p>Choose how much SOL to swap, confirm, and welcome to the Zoomer Lobby.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. gallery: stories + grid -->
+  <section class="post" id="memes">
+    <div class="media blur" data-p="0.3"><img src="meme_06.jpg" alt=""></div>
+    <div class="shade" style="background:linear-gradient(180deg,rgba(0,0,0,.7),rgba(0,0,0,.85))"></div>
+    <div class="top"><span>Stories</span><span>&#9654;</span></div>
+    <div class="body wide" data-p="-0.08">
+      <div class="stories">
+        <div class="story"><span><img src="meme_01.jpg" alt=""></span>onboarding</div>
+        <div class="story"><span><img src="meme_02.jpg" alt=""></span>fit check</div>
+        <div class="story"><span><img src="meme_03.jpg" alt=""></span>lobby</div>
+        <div class="story"><span><img src="meme_04.jpg" alt=""></span>grind</div>
+        <div class="story"><span><img src="meme_05.jpg" alt=""></span>vibes</div>
+        <div class="story"><span><img src="meme_06.jpg" alt=""></span>wojak</div>
+      </div>
+      <h2 class="cap">meme dump</h2>
+      <div class="grid">
+        <img loading="lazy" src="meme_01.jpg" alt="Zoomer meme 1"><img loading="lazy" src="meme_02.jpg" alt="Zoomer meme 2"><img loading="lazy" src="meme_03.jpg" alt="Zoomer meme 3">
+        <img loading="lazy" src="meme_04.jpg" alt="Zoomer meme 4"><img loading="lazy" src="meme_05.jpg" alt="Zoomer meme 5"><img loading="lazy" src="meme_06.jpg" alt="Zoomer meme 6">
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. video -->
+  <section class="post" id="video">
+    <div class="media" data-p="0.2" style="inset:0"><video src="clip.mp4" controls muted loop playsinline preload="metadata"></video></div>
+    <div class="top"><span>Clip</span><span>&#127909;</span></div>
+    <div class="rail" style="bottom:90px">
+      <button type="button" class="like"><span class="ic">&#9829;</span>no cap</button>
+      <button type="button" class="share"><span class="ic">&#10150;</span>share</button>
+    </div>
+    <div class="body" style="padding-bottom:70px;pointer-events:none" data-p="-0.1"><h2 class="cap">welcome to the lobby</h2></div>
+  </section>
+
+  <!-- 8. footer post -->
+  <section class="post" id="footer">
+    <div class="media blur" data-p="0.3"><img src="hero.png" alt=""></div>
+    <div class="shade" style="background:linear-gradient(180deg,rgba(0,0,0,.6),rgba(0,0,0,.9))"></div>
+    <div class="top"><span>Links</span><span>&#128279;</span></div>
+    <div class="body wide" data-p="-0.1">
+      <h2 class="cap xl" style="font-size:44px">touch grass?<br><span class="w">i'd rather touch $ZOOMER</span></h2>
+      <div class="btns" style="margin-bottom:6px"><a class="btn" href="#" target="_blank" rel="noopener">Buy on pump.fun</a></div>
+      <div class="pills"><a class="pill" href="#" target="_blank" rel="noopener">X / Twitter</a><a class="pill" href="#" target="_blank" rel="noopener">pump.fun</a><a class="pill" href="#" target="_blank" rel="noopener">DEX Screener</a></div>
+      <p class="disc">$ZOOMER is a memecoin with no intrinsic value or expectation of financial return. It is not affiliated with, endorsed by, or connected to any person, brand or company referenced in its memes. There is no team roadmap or promise of profit. Crypto is volatile; only spend what you can afford to lose.</p>
+    </div>
+  </section>
+
+</main>
+
+<script>
+(function(){
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var phone = document.getElementById('phone'), bg = document.getElementById('bg');
+  var mq = window.matchMedia('(max-width:900px),(max-height:620px)');
+  function desktop(){ return !mq.matches; }
+
+  document.getElementById('copy').addEventListener('click', function(){
+    var t = document.getElementById('ca').textContent.trim(), b = this;
+    try{ navigator.clipboard.writeText(t).then(function(){ b.textContent='Copied'; }, function(){ b.textContent='Select & copy'; }); }
+    catch(e){ b.textContent='Select & copy'; }
+    setTimeout(function(){ b.textContent='Copy'; }, 1800);
+  });
+
+  /* like / share buttons */
+  Array.prototype.forEach.call(document.querySelectorAll('.rail .like'), function(b){
+    b.addEventListener('click', function(){ b.classList.toggle('on'); b.lastChild.textContent = b.classList.contains('on') ? 'liked' : 'no cap'; });
+  });
+  Array.prototype.forEach.call(document.querySelectorAll('.rail .share'), function(b){
+    b.addEventListener('click', function(){
+      var label = b.lastChild, url = location.href.split('#')[0];
+      try{
+        if(navigator.share){ navigator.share({title:'$ZOOMER', url:url}).catch(function(){}); }
+        else { navigator.clipboard.writeText(url).then(function(){ label.textContent='copied'; setTimeout(function(){ label.textContent='share'; },1500); }, function(){}); }
+      }catch(e){}
+    });
+  });
+
+  /* fit the phone to the viewport on desktop */
+  var scale = 1;
+  function fit(){
+    if(!desktop()){ scale = 1; phone.style.transform=''; return; }
+    scale = Math.min(1, (window.innerHeight - 48) / 860, (window.innerWidth - 40) / 430);
+    phone.style.transform = 'scale('+scale.toFixed(3)+') '+tiltStr;
+    document.querySelector('.phone-wrap .notch').style.top = (window.innerHeight/2 - 430*scale + 14*scale) + 'px';
+  }
+  var tiltStr = '';
+  fit(); window.addEventListener('resize', fit);
+
+  /* snappy reveals */
+  var rv = document.querySelectorAll('.rv');
+  if('IntersectionObserver' in window && !reduce){
+    var io = new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} }); }, {root:desktop()?phone:null, threshold:.1});
+    rv.forEach(function(el,k){ el.style.transitionDelay = (k%4)*.07+'s'; io.observe(el); });
+  } else { rv.forEach(function(el){ el.classList.add('in'); }); }
+
+  if(reduce) return;
+
+  /* parallax driven by whichever thing scrolls (the phone on desktop, the window on mobile) */
+  var posts = Array.prototype.slice.call(document.querySelectorAll('.post')), ticking=false;
+  function frame(){
+    ticking=false;
+    var d = desktop(), top0 = d ? phone.getBoundingClientRect().top : 0, vh = d ? 860*scale : window.innerHeight;
+    var y = d ? phone.scrollTop : (window.scrollY||window.pageYOffset);
+    bg.style.transform = 'translate3d(0,'+(-y*0.12).toFixed(1)+'px,0)';
+    for(var i=0;i<posts.length;i++){
+      var p = posts[i], r = p.getBoundingClientRect(), rel = (r.top - top0)/scale; /* px from top of the screen, unscaled */
+      if(rel > vh/scale + 100 || rel < -(vh/scale) - 100) continue;
+      if(Math.abs(rel) < vh/scale*0.7){ var rvs = p.querySelectorAll('.rv'); for(var q=0;q<rvs.length;q++) rvs[q].classList.add('in'); }
+      var layers = p.querySelectorAll('[data-p]');
+      for(var j=0;j<layers.length;j++){
+        var k = parseFloat(layers[j].getAttribute('data-p'));
+        layers[j].style.transform = 'translate3d(0,'+(rel*k).toFixed(1)+'px,0)';
+      }
+    }
+  }
+  function onScroll(){ if(!ticking){ ticking=true; requestAnimationFrame(frame);} }
+  phone.addEventListener('scroll', onScroll, {passive:true});
+  window.addEventListener('scroll', onScroll, {passive:true});
+  frame();
+
+  /* pointer tilt on the phone (desktop only) */
+  var tx=0,ty=0,cx=0,cy=0,raf=null;
+  function ease(){
+    cx += (tx-cx)*.08; cy += (ty-cy)*.08;
+    tiltStr = 'rotateY('+(cx*8).toFixed(2)+'deg) rotateX('+(-cy*6).toFixed(2)+'deg)';
+    if(desktop()) phone.style.transform = 'perspective(1400px) scale('+scale.toFixed(3)+') '+tiltStr;
+    if(Math.abs(tx-cx)>.002 || Math.abs(ty-cy)>.002) raf=requestAnimationFrame(ease); else raf=null;
+  }
+  window.addEventListener('pointermove', function(e){
+    if(e.pointerType==='touch' || !desktop()) return;
+    tx = e.clientX/window.innerWidth - .5; ty = e.clientY/window.innerHeight - .5;
+    if(!raf) raf=requestAnimationFrame(ease);
+  }, {passive:true});
+})();
+</script>
+</body>
+</html>
